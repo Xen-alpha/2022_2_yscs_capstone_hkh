@@ -1,0 +1,74 @@
+INFO:root:Input shape:
+INFO:root:(3, 32, 32)
+INFO:root:Model layer sizes:
+INFO:root:   1  10
+INFO:root:============================ PYTORCHFI INIT SUMMARY ==============================
+
+Layer types allowing injections:
+----------------------------------------------------------------------------------
+   - Linear
+
+Model Info:
+----------------------------------------------------------------------------------
+   - Shape of input into the model: (3 32 32 )
+   - Batch Size: 4
+   - CUDA Enabled: True
+
+Layer Info:
+----------------------------------------------------------------------------------
+Layer #       Layer type  Dimensions         Weight Shape         Output Shape
+----------------------------------------------------------------------------------
+    0           Linear           2            [10, 512]              [1, 10]
+==================================================================================
+
+INFO:root:Declaring Custom Function
+INFO:root:Convolution: [0, 0, 0, 0]
+INFO:root:Batch, x, y, z:
+INFO:root:[0, 1, 2, 3], [7, 1, 0, 1], [None, None, None, None], [None, None, None, None]
+INFO:root:Checking bounds before runtime
+INFO:root:Finished checking bounds on inj '0'
+INFO:root:Finished checking bounds on inj '1'
+INFO:root:Finished checking bounds on inj '2'
+INFO:root:Finished checking bounds on inj '3'
+INFO:root:Current layer: 0
+INFO:root:Range_max: 6.371824264526367
+INFO:root:Finished checking bounds on inj '0'
+INFO:root:Random Bit: 2
+INFO:root:Original Value: tensor([[-0.9801]], device='cuda:0')
+INFO:root:Quantum: -330333664
+INFO:root:Twos Couple: 3964633632
+INFO:root:Bits: 11101100010011111000001000100000
+INFO:root:Sign extend bits 11101100010011111000001000100000
+INFO:root:New bits: 11101100010011111000001000100100
+INFO:root:Out: -330333660
+INFO:root:New Value: -0.9801369300940088
+INFO:root:Finished checking bounds on inj '1'
+INFO:root:Random Bit: 5
+INFO:root:Original Value: tensor([[-0.9042]], device='cuda:0')
+INFO:root:Quantum: -304739520
+INFO:root:Twos Couple: 3990227776
+INFO:root:Bits: 11101101110101100000101101000000
+INFO:root:Sign extend bits 11101101110101100000101101000000
+INFO:root:New bits: 11101101110101100000101101100000
+INFO:root:Out: -304739488
+INFO:root:New Value: -0.9041961580504392
+INFO:root:Finished checking bounds on inj '2'
+INFO:root:Random Bit: 6
+INFO:root:Original Value: tensor([[-0.1975]], device='cuda:0')
+INFO:root:Quantum: -66550880
+INFO:root:Twos Couple: 4228416416
+INFO:root:Bits: 11111100000010001000001110100000
+INFO:root:Sign extend bits 11111100000010001000001110100000
+INFO:root:New bits: 11111100000010001000001111100000
+INFO:root:Out: -66550816
+INFO:root:New Value: -0.1974637174107272
+INFO:root:Finished checking bounds on inj '3'
+INFO:root:Random Bit: 22
+INFO:root:Original Value: tensor([[-0.6226]], device='cuda:0')
+INFO:root:Quantum: -209843536
+INFO:root:Twos Couple: 4085123760
+INFO:root:Bits: 11110011011111100000101010110000
+INFO:root:Sign extend bits 11110011011111100000101010110000
+INFO:root:New bits: 11110011001111100000101010110000
+INFO:root:Out: -214037840
+INFO:root:New Value: -0.6350742198707593
