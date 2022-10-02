@@ -107,7 +107,7 @@ print(base_fi_model.print_pytorchfi_layer_summary())
 
 # fault injection layer range setting
 if layer_nums != 'all':
-    layer_nums = list(map(int, input().split(',')))
+    layer_nums = list(map(int, layer_nums.split(',')))
     layer_nums.sort()
     while layer_nums and layer_nums[-1] >= base_fi_model.get_total_layers():
         layer_nums.pop()
