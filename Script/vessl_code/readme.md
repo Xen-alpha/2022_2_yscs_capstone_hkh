@@ -6,7 +6,7 @@
 ## 사용법
 1. `vessl.ai`에 로그인
 2. `Projects`의 `neuron-single-bit-flip` 들어가기
-3. `New experiment` 또는 기존의 실험 결과창에 들어가서 `Reprocude` 누르기
+3. `New experiment` 또는 기존의 실험 결과창에 들어가서 `Reproduce` 누르기
 4. `Datasets, codes or files`의 `Add Dataset`으로 `/input`에 사용하고픈 데이터셋 넣기
 5. `Start command` 및 `Hyperparameters` 적고 `Deploy`
 
