@@ -234,5 +234,5 @@ if args.detailed_log:
     f.close()
 
 # save misclassification rate
-data = pd.DataFrame([layer_name, misclassification_rate]).transpose()
+data = pd.DataFrame({'name': layer_name, f'seed_{seed}': misclassification_rate})
 data.to_csv(save_path + '.csv')
