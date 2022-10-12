@@ -1,0 +1,454 @@
+
+
+===== Result =====
+Seed: 12345678
+Processing layer # 0
+Layer # 0 has no weight
+Processing layer # 1
+Layer: 1
+Position: ([12], [2], [2], [0])
+Original value:  -0.03628533333539963
+Original binary: 10111101000101001001111111101110
+Flip bit: 16
+Error value:     -0.03616326302289963
+Error binary:    10111101000101000001111111101110
+
+
+Processing layer # 2
+Layer: 2
+Position: ([9], [None], [None], [None])
+Original value:  0.025838732719421387
+Original binary: 00111100110100111010101111000000
+Flip bit: 21
+Error value:     0.0258406400680542
+Error binary:    00111100110100111010111111000000
+
+
+Processing layer # 3
+Layer # 3 has no weight
+Processing layer # 4
+Layer # 4 has no weight
+Processing layer # 5
+Layer: 5
+Position: ([15], [19], [1], [0])
+Original value:  -2.9929431548225693e-05
+Original binary: 10110111111110110001000011110111
+Flip bit: 31
+Error value:     -2.992942972923629e-05
+Error binary:    10110111111110110001000011110110
+
+
+Processing layer # 6
+Layer: 6
+Position: ([5], [None], [None], [None])
+Original value:  0.061767034232616425
+Original binary: 00111101011111001111111101101110
+Flip bit: 23
+Error value:     0.06176608055830002
+Error binary:    00111101011111001111111001101110
+
+
+Processing layer # 7
+Layer # 7 has no weight
+Processing layer # 8
+Layer: 8
+Position: ([28], [61], [2], [0])
+Original value:  -0.01131115760654211
+Original binary: 10111100001110010101001001101111
+Flip bit: 29
+Error value:     -0.011311153881251812
+Error binary:    10111100001110010101001001101011
+
+
+Processing layer # 9
+Layer: 9
+Position: ([28], [None], [None], [None])
+Original value:  0.07727567851543427
+Original binary: 00111101100111100100001010110110
+Flip bit: 8
+Error value:     0.03863783925771713
+Error binary:    00111101000111100100001010110110
+
+
+Processing layer # 10
+Layer # 10 has no weight
+Processing layer # 11
+Layer: 11
+Position: ([32], [8], [1], [0])
+Original value:  -0.010491817258298397
+Original binary: 10111100001010111110010111011111
+Flip bit: 27
+Error value:     -0.010491802357137203
+Error binary:    10111100001010111110010111001111
+
+
+Processing layer # 12
+Layer: 12
+Position: ([35], [None], [None], [None])
+Original value:  0.04275579750537872
+Original binary: 00111101001011110010000010110100
+Flip bit: 19
+Error value:     0.04277105629444122
+Error binary:    00111101001011110011000010110100
+
+
+Processing layer # 13
+Layer # 13 has no weight
+Processing layer # 14
+Layer: 14
+Position: ([48], [23], [2], [0])
+Original value:  -0.0056169042363762856
+Original binary: 10111011101110000000111000000010
+Flip bit: 8
+Error value:     -0.0028084521181881428
+Error binary:    10111011001110000000111000000010
+
+
+Processing layer # 15
+Layer: 15
+Position: ([31], [None], [None], [None])
+Original value:  0.04646695777773857
+Original binary: 00111101001111100101010000100011
+Flip bit: 13
+Error value:     0.04549039527773857
+Error binary:    00111101001110100101010000100011
+
+
+Processing layer # 16
+Layer # 16 has no weight
+Processing layer # 17
+Layer: 17
+Position: ([103], [62], [0], [2])
+Original value:  -0.012970815412700176
+Original binary: 10111100010101001000001110001011
+Flip bit: 29
+Error value:     -0.012970819137990475
+Error binary:    10111100010101001000001110001111
+
+
+Processing layer # 18
+Layer: 18
+Position: ([15], [None], [None], [None])
+Original value:  0.05367559567093849
+Original binary: 00111101010110111101101011110001
+Flip bit: 23
+Error value:     0.0536765493452549
+Error binary:    00111101010110111101101111110001
+
+
+Processing layer # 19
+Layer # 19 has no weight
+Processing layer # 20
+Layer: 20
+Position: ([56], [37], [0], [1])
+Original value:  0.0049436804838478565
+Original binary: 00111011101000011111111010011001
+Flip bit: 9
+Error value:     0.0068968054838478565
+Error binary:    00111011111000011111111010011001
+
+
+Processing layer # 21
+Layer: 21
+Position: ([103], [None], [None], [None])
+Original value:  0.06377239525318146
+Original binary: 00111101100000101001101100011010
+Flip bit: 15
+Error value:     0.06426067650318146
+Error binary:    00111101100000111001101100011010
+
+
+Processing layer # 22
+Layer: 22
+Position: ([53], [35], [0], [0])
+Original value:  0.005751749966293573
+Original binary: 00111011101111000111100100101101
+Flip bit: 25
+Error value:     0.005751779768615961
+Error binary:    00111011101111000111100101101101
+
+
+Processing layer # 23
+Layer: 23
+Position: ([58], [None], [None], [None])
+Original value:  0.03695129603147507
+Original binary: 00111101000101110101101000111110
+Flip bit: 29
+Error value:     0.03695128113031387
+Error binary:    00111101000101110101101000111010
+
+
+Processing layer # 24
+Layer # 24 has no weight
+Processing layer # 25
+Layer: 25
+Position: ([10], [80], [2], [1])
+Original value:  -0.0022111362777650356
+Original binary: 10111011000100001110100010110110
+Flip bit: 26
+Error value:     -0.0022111288271844387
+Error binary:    10111011000100001110100010010110
+
+
+Processing layer # 26
+Layer: 26
+Position: ([65], [None], [None], [None])
+Original value:  0.06526822596788406
+Original binary: 00111101100001011010101101011001
+Flip bit: 23
+Error value:     0.06526631861925125
+Error binary:    00111101100001011010101001011001
+
+
+Processing layer # 27
+Layer # 27 has no weight
+Processing layer # 28
+Layer: 28
+Position: ([67], [76], [2], [2])
+Original value:  -0.005215589422732592
+Original binary: 10111011101010101110011110001001
+Flip bit: 12
+Error value:     -0.004971448797732592
+Error binary:    10111011101000101110011110001001
+
+
+Processing layer # 29
+Layer: 29
+Position: ([80], [None], [None], [None])
+Original value:  0.034858137369155884
+Original binary: 00111101000011101100011101101000
+Flip bit: 27
+Error value:     0.03485819697380066
+Error binary:    00111101000011101100011101111000
+
+
+Processing layer # 30
+Layer # 30 has no weight
+Processing layer # 31
+Layer: 31
+Position: ([56], [83], [0], [2])
+Original value:  -0.0034412993118166924
+Original binary: 10111011011000011000011101101100
+Flip bit: 12
+Error value:     -0.0035633696243166924
+Error binary:    10111011011010011000011101101100
+
+
+Processing layer # 32
+Layer: 32
+Position: ([247], [None], [None], [None])
+Original value:  0.04440619423985481
+Original binary: 00111101001101011110001101000101
+Flip bit: 6
+Error value:     0.710499107837677
+Error binary:    00111111001101011110001101000101
+
+
+Processing layer # 33
+Layer # 33 has no weight
+Processing layer # 34
+Layer: 34
+Position: ([180], [124], [1], [2])
+Original value:  0.004177699331194162
+Original binary: 00111011100010001110010100010101
+Flip bit: 25
+Error value:     0.00417772913351655
+Error binary:    00111011100010001110010101010101
+
+
+Processing layer # 35
+Layer: 35
+Position: ([30], [None], [None], [None])
+Original value:  0.043189506977796555
+Original binary: 00111101001100001110011101111011
+Flip bit: 12
+Error value:     0.045142631977796555
+Error binary:    00111101001110001110011101111011
+
+
+Processing layer # 36
+Layer: 36
+Position: ([141], [57], [0], [0])
+Original value:  -0.0067065381444990635
+Original binary: 10111011110110111100001010000101
+Flip bit: 21
+Error value:     -0.006707014981657267
+Error binary:    10111011110110111100011010000101
+
+
+Processing layer # 37
+Layer: 37
+Position: ([200], [None], [None], [None])
+Original value:  0.012482614256441593
+Original binary: 00111100010011001000001111100001
+Flip bit: 21
+Error value:     0.012483567930758
+Error binary:    00111100010011001000011111100001
+
+
+Processing layer # 38
+Layer # 38 has no weight
+Processing layer # 39
+Layer: 39
+Position: ([83], [249], [0], [1])
+Original value:  0.001966600539162755
+Original binary: 00111011000000001110001000010101
+Flip bit: 15
+Error value:     0.001981859328225255
+Error binary:    00111011000000011110001000010101
+
+
+Processing layer # 40
+Layer: 40
+Position: ([73], [None], [None], [None])
+Original value:  0.03743625804781914
+Original binary: 00111101000110010101011011000011
+Flip bit: 12
+Error value:     0.03548313304781914
+Error binary:    00111101000100010101011011000011
+
+
+Processing layer # 41
+Layer # 41 has no weight
+Processing layer # 42
+Layer: 42
+Position: ([79], [54], [0], [0])
+Original value:  -0.00045068521285429597
+Original binary: 10111001111011000100100111110010
+Flip bit: 28
+Error value:     -0.0004506854456849396
+Error binary:    10111001111011000100100111111010
+
+
+Processing layer # 43
+Layer: 43
+Position: ([144], [None], [None], [None])
+Original value:  0.04301946982741356
+Original binary: 00111101001100000011010100101111
+Flip bit: 10
+Error value:     0.03520696982741356
+Error binary:    00111101000100000011010100101111
+
+
+Processing layer # 44
+Layer # 44 has no weight
+Processing layer # 45
+Layer: 45
+Position: ([254], [90], [1], [1])
+Original value:  -0.00017492417828179896
+Original binary: 10111001001101110110101111011010
+Flip bit: 26
+Error value:     -0.00017492464394308627
+Error binary:    10111001001101110110101111111010
+
+
+Processing layer # 46
+Layer: 46
+Position: ([245], [None], [None], [None])
+Original value:  0.021547831594944
+Original binary: 00111100101100001000010100010100
+Flip bit: 30
+Error value:     0.0215478353202343
+Error binary:    00111100101100001000010100010110
+
+
+Processing layer # 47
+Layer # 47 has no weight
+Processing layer # 48
+Layer: 48
+Position: ([488], [461], [1], [1])
+Original value:  6.2047729443293065e-06
+Original binary: 00110110110100000011001010011000
+Flip bit: 28
+Error value:     6.204769306350499e-06
+Error binary:    00110110110100000011001010010000
+
+
+Processing layer # 49
+Layer: 49
+Position: ([298], [None], [None], [None])
+Original value:  0.06900522857904434
+Original binary: 00111101100011010101001010011101
+Flip bit: 14
+Error value:     0.06998179107904434
+Error binary:    00111101100011110101001010011101
+
+
+Processing layer # 50
+Layer: 50
+Position: ([397], [97], [0], [0])
+Original value:  -0.0008474324131384492
+Original binary: 10111010010111100010011000111010
+Flip bit: 28
+Error value:     -0.0008474319474771619
+Error binary:    10111010010111100010011000110010
+
+
+Processing layer # 51
+Layer: 51
+Position: ([33], [None], [None], [None])
+Original value:  0.07327070087194443
+Original binary: 00111101100101100000111011110011
+Flip bit: 18
+Error value:     0.07333173602819443
+Error binary:    00111101100101100010111011110011
+
+
+Processing layer # 52
+Layer # 52 has no weight
+Processing layer # 53
+Layer: 53
+Position: ([463], [316], [0], [0])
+Original value:  5.588931526290253e-05
+Original binary: 00111000011010100110101010110010
+Flip bit: 20
+Error value:     5.5881864682305604e-05
+Error binary:    00111000011010100110001010110010
+
+
+Processing layer # 54
+Layer: 54
+Position: ([258], [None], [None], [None])
+Original value:  0.016444046050310135
+Original binary: 00111100100001101011010110101010
+Flip bit: 14
+Error value:     0.016199905425310135
+Error binary:    00111100100001001011010110101010
+
+
+Processing layer # 55
+Layer # 55 has no weight
+Processing layer # 56
+Layer: 56
+Position: ([146], [397], [0], [0])
+Original value:  -3.415024184505455e-05
+Original binary: 10111000000011110011110010001011
+Flip bit: 25
+Error value:     -3.4150474675698206e-05
+Error binary:    10111000000011110011110011001011
+
+
+Processing layer # 57
+Layer: 57
+Position: ([200], [None], [None], [None])
+Original value:  0.09157425910234451
+Original binary: 00111101101110111000101101001001
+Flip bit: 12
+Error value:     0.08766800910234451
+Error binary:    00111101101100111000101101001001
+
+
+Processing layer # 58
+Layer # 58 has no weight
+Processing layer # 59
+Layer # 59 has no weight
+Processing layer # 60
+Layer: 60
+Position: ([8], [255], [None], [None])
+Original value:  -0.0268989410251379
+Original binary: 10111100110111000101101100101011
+Flip bit: 22
+Error value:     -0.026897987350821495
+Error binary:    10111100110111000101100100101011
+
+
