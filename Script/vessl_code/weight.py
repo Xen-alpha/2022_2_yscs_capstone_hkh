@@ -11,11 +11,11 @@ import vessl
 
 from torchvision import transforms
 
-from base_fault_injection import add_input_layer, single_bit_flip_model
+from base_fault_injection import single_bit_flip_model
 
 import pytorchfi # git clone https://github.com/WaiNaat/pytorchfi.git
 from pytorchfi.core import FaultInjection
-from pytorchfi.neuron_error_models import random_neuron_location
+from pytorchfi.weight_error_models import random_weight_location
 
 vessl.init()
 
@@ -64,7 +64,6 @@ random.seed(seed)
 
 # load model
 model = torch.hub.load("chenyaofo/pytorch-cifar-models", dataset + '_' + model_name, pretrained=True)
-model = add_input_layer(model)
 model.to(device)
 
 print(model, end='\n\n')
@@ -118,101 +117,99 @@ else:
 
 # experiment
 print(f'Seed: {seed}')
-results = []
-misclassification_rate = []
-layer_name = []
-error_logs = []
 
+# 실험 진행
+results = []
+layer_name = []
+misclassification_rate = []
+detailed_log = []
+
+# layer 순회
 for layer_num in layer_nums:
-    
+
+    # 우선 해당 레이어에 weight값이 있는지부터 확인
+    try:
+        layer, k, C, H, W = random_weight_location(base_fi_model, layer=layer_num)
+    except:
+        results.append(f"Layer # {layer_num} has no weight")
+        continue
+
     orig_correct_cnt = 0
     orig_corrupt_diff_cnt = 0
     batch_idx = -1
-    
+
+    # batch 순회
     for images, labels in dataloader:
 
         batch_idx += 1
-
         images = images.to(device)
 
-        # original model inference
+        # 원본에 inference 진행
         model.eval()
         with torch.no_grad():
             orig_output = model(images)
 
-        # determine single bit flip position
-        layer_num_list = []
-        dim1 = []
-        dim2 = []
-        dim3 = []
+        # fault injection 위치 선정
+        layer, k, C, H, W = random_weight_location(base_fi_model, layer=layer_num)
 
-        for _ in range(batch_size):
-            layer, C, H, W = random_neuron_location(base_fi_model, layer=layer_num)
+        # corrupted model 만들기
+        if args.detailed_log:
+            base_fi_model.reset_log()
 
-            layer_num_list.append(layer)
-            dim1.append(C)
-            dim2.append(H)
-            dim3.append(W)
-
-        # make corrupted model
-        base_fi_model.reset_log()
-        corrupted_model = base_fi_model.declare_neuron_fault_injection(
-            batch = [i for i in range(batch_size)],
-            layer_num = layer_num_list,
-            dim1 = dim1,
-            dim2 = dim2,
-            dim3 = dim3,
-            function = base_fi_model.neuron_single_bit_flip_function
+        corrupted_model = base_fi_model.declare_weight_fault_injection(
+            function = base_fi_model.weight_flip_function,
+            layer_num = layer,
+            k = k,
+            dim1 = C,
+            dim2 = H,
+            dim3 = W
         )
 
-        # corrupted model inference
+        if args.detailed_log:
+            log = [
+                f'Layer: {layer_num}',
+                f'''Layer type: {str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]}''',
+                f'Position: ({k[0]}, {C[0]}, {H[0]}, {W[0]})',
+                f'Original value:  {base_fi_model.log_original_value[0]}',
+                f'Original binary: {base_fi_model.log_original_value_bin[0]}',
+                f'Flip bit: {base_fi_model.log_bit_pos[0]}',
+                f'Error value:     {base_fi_model.log_error_value[0]}',
+                f'Error binary:    {base_fi_model.log_error_value_bin[0]}',
+            ]
+
+            detailed_log.append('\n'.join(log))
+
+        # corrupted model에 inference 진행
         corrupted_model.eval()
         with torch.no_grad():
             corrupted_output = corrupted_model(images)
 
-        # get label
+        # 결과 정리
         original_output = torch.argmax(orig_output, dim=1).cpu().numpy()
         corrupted_output = torch.argmax(corrupted_output, dim=1).cpu().numpy()
-        labels = labels.numpy()
-
-        # calc result
+        
+        # 결과 비교: 원본이 정답을 맞춘 경우 중 망가진 모델이 틀린 경우를 셈
         for i in range(batch_size):
-
             if labels[i] == original_output[i]:
                 orig_correct_cnt += 1
-
                 if original_output[i] != corrupted_output[i]:
-                    orig_corrupt_diff_cnt += 1
+                        orig_corrupt_diff_cnt += 1
 
-                    if args.detailed_log:
-                        log = [
-                            f'Layer: {layer_num}',
-                            f'Batch: {batch_idx}',
-                            f'Position: ({i}, {dim1[i]}, {dim2[i]}, {dim3[i]})',
-                            f'Original value:  {base_fi_model.log_original_value[i]}',
-                            f'Original binary: {base_fi_model.log_original_value_bin[i]}',
-                            f'Flip bit: {base_fi_model.log_bit_pos[i]}',
-                            f'Error value:     {base_fi_model.log_error_value[i]}',
-                            f'Error binary:    {base_fi_model.log_error_value_bin[i]}',
-                            f'Label:        {labels[i]}',
-                            f'Model output: {corrupted_output[i]}',
-                            '\n'
-                        ]
+                        if args.detailed_log:
+                            detailed_log.append(f'Batch: {batch_idx}\nImage: {i}\nLabel: {labels[i]}\nModel output: {corrupted_output[i]}')
 
-                        error_logs.append('\n'.join(log))
-
-    # save result
+    # 결과 저장
     rate = orig_corrupt_diff_cnt / orig_correct_cnt * 100
     result = f'Layer #{layer_num}: {orig_corrupt_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
-    print(result)
-    results.append(result)
     misclassification_rate.append(rate)
     layer_name.append(str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0])
+    results.append(result)
     vessl.log(step=layer_num, payload={'Misclassification_rate': rate})
+    print(result)
 
 # save log file
 # save overall log
-save_path = os.path.join(args.output_path, '_'.join(['neuron', model_name, dataset, str(seed)]))
+save_path = os.path.join(args.output_path, '_'.join(['weight', model_name, dataset, str(seed)]))
 vessl.log({'seed': seed})
 
 f = open(save_path + '.txt', 'w')
@@ -228,7 +225,7 @@ f.close()
 if args.detailed_log:
     f = open(save_path + '_detailed.txt', 'w')
 
-    for error_log in error_logs:
+    for error_log in detailed_log:
         f.write(error_log + '\n')
 
     f.close()

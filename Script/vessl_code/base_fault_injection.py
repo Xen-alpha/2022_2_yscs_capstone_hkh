@@ -19,7 +19,7 @@ class add_input_layer(torch.nn.Module):
         return output
 
 
-class neuron_single_bit_flip(FaultInjection):
+class single_bit_flip_model(FaultInjection):
     def __init__(self, model, batch_size, flip_bit_pos=None, save_log_list=False, **kwargs):
         super().__init__(model, batch_size, **kwargs)
         self.flip_bit_pos = flip_bit_pos
@@ -70,8 +70,22 @@ class neuron_single_bit_flip(FaultInjection):
 
         return torch.tensor(new_value, dtype=save_type)
 
+    def weight_single_bit_flip_function(self, weight, position):
+    
+        bits = weight[position].dtype
+        if bits == torch.float32:
+            bits = 32
+        elif bits == torch.float64:
+            bits = 64
+        else:
+            raise AssertionError(f'Unsupported data type {bits}')
+
+        rand_bit = random.randint(0, bits - 1) if self.flip_bit_pos is None else self.flip_bit_pos
+
+        return self._single_bit_flip(weight[position], rand_bit)
+
     # structure from pytorchfi/neuron_error_models/single_bit_flip_func/single_bit_flip_signed_across_batch
-    def single_bit_flip_function(self, module, input_val, output):
+    def neuron_single_bit_flip_function(self, module, input_val, output):
         corrupt_conv_set = self.corrupt_layer
         
         bits = output.dtype
