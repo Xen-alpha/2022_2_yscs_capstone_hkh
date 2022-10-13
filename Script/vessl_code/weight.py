@@ -14,7 +14,6 @@ from torchvision import transforms
 from base_fault_injection import single_bit_flip_model
 
 import pytorchfi # git clone https://github.com/WaiNaat/pytorchfi.git
-from pytorchfi.core import FaultInjection
 from pytorchfi.weight_error_models import random_weight_location
 
 vessl.init()
@@ -159,7 +158,7 @@ for layer_num in layer_nums:
             base_fi_model.reset_log()
 
         corrupted_model = base_fi_model.declare_weight_fault_injection(
-            function = base_fi_model.weight_flip_function,
+            function = base_fi_model.weight_single_bit_flip_function,
             layer_num = layer,
             k = k,
             dim1 = C,
