@@ -14,7 +14,8 @@
 ```
 pip install bitstring && git clone https://github.com/Xen-alpha/2022_2_yscs_capstone_hkh.git && mv 2022_2_yscs_capstone_hkh/Script/vessl_code/* ~ && git clone https://github.com/WaiNaat/pytorchfi.git && python neuron.py
 ```
-만약 자세한 바이너리 로그 파일도 저장하고 싶으시면 `python neuron.py --detailed-log` 사용하시면 됩니다.
+만약 자세한 바이너리 로그 파일도 저장하고 싶으시면 `python neuron.py --detailed-log` 사용하시면 됩니다.     
+weight fault injection은 `python weight.py`로 가능합니다.
 
 ## Hyperparameters
 | Key | Default value | Description |

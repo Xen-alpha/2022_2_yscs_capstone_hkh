@@ -131,7 +131,9 @@ for layer_num in layer_nums:
     try:
         layer, k, C, H, W = random_weight_location(base_fi_model, layer=layer_num)
     except:
-        results.append(f"Layer # {layer_num} has no weight")
+        result = f"Layer # {layer_num} has no weight"
+        print(result)
+        results.append(result)
         continue
 
     orig_correct_cnt = 0
