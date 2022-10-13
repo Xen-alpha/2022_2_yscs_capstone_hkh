@@ -6,7 +6,8 @@ Pytorch, PytorchFI, and researching area for YSCS Capstone 2022
 최종 결과물 업로드는 main branch에 바로 반영하고, 기능 테스트를 위해서는 별도의 Branch를 만드시기 바랍니다.
 
 ## Script 폴더
-실험용 스크립트를 모을 폴더입니다.
+실험용 스크립트를 모을 폴더입니다.    
+`vessl.ai` 사용법 링크: [즉시이동](https://github.com/Xen-alpha/2022_2_yscs_capstone_hkh/tree/main/Script/vessl_code)
 
 ## Documentation 폴더
 실험에 사용할 PytorchFI 라이브러리에 관한 Documentation과 Example을 모을 예정입니다.
