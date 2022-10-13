@@ -130,7 +130,7 @@ for layer_num in layer_nums:
     try:
         layer, k, C, H, W = random_weight_location(base_fi_model, layer=layer_num)
     except:
-        result = f"Layer # {layer_num} has no weight"
+        result = f"Layer #{layer_num} has no weight"
         print(result)
         results.append(result)
         continue
@@ -227,7 +227,7 @@ if args.detailed_log:
     f = open(save_path + '_detailed.txt', 'w')
 
     for error_log in detailed_log:
-        f.write(error_log + '\n')
+        f.write(error_log + '\n\n')
 
     f.close()
 
