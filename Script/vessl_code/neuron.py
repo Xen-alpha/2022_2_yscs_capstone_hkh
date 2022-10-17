@@ -236,3 +236,8 @@ if args.detailed_log:
 # save misclassification rate
 data = pd.DataFrame({'name': layer_name, f'seed_{seed}': misclassification_rate})
 data.to_csv(save_path + '.csv')
+
+# save avg value
+for name in set(layer_name):
+    avg_val = data[data['name'] == name][f'seed_{seed}'].mean()
+    vessl.log({name: avg_val})
