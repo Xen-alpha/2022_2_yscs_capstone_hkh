@@ -288,13 +288,13 @@ for layer_num in layer_nums:
     rate = orig_corrupt_diff_cnt / orig_correct_cnt * 100
     rate2 = orig_robust_diff_cnt / orig_correct_cnt * 100
     result = f'Layer #{layer_num}: {orig_corrupt_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
-    result += '\n                  : {orig_robust_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_robust_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
+    result += f'\n                  : {orig_robust_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_robust_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
     print(result)
     results.append(result)
     misclassification_rate.append(rate)
     layer_name.append(str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0])
-    vessl.log(step=layer_num, payload={'Misclassification_rate(corrupted model)': rate})
-    vessl.log(step=layer_num, payload={'Misclassification_rate(robust model)': rate2})
+    vessl.log(step=layer_num, payload={'Misclassification_rate_corrupted_model': rate})
+    vessl.log(step=layer_num, payload={'Misclassification_rate_robust_model': rate2})
 
 # save log file
 # save overall log
