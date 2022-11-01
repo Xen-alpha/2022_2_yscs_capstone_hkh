@@ -303,7 +303,7 @@ for layer_num in layer_nums:
     result = f'Layer #{layer_num}:'
     result += f'\n    {orig_corrupt_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
     result += f'\n    {orig_robust_diff_cnt} / {orig_correct_cnt} = {rate2:.4f}%, ' + str(base_fi_robust_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
-    result += f'\n    Accuracy: Original {acc_orig:.2f}%, Corrupt {acc_corrupt.2f}%, Robust {acc_robust:.2f}'
+    result += f'\n    Accuracy: Original {acc_orig:.2f}%, Corrupt {acc_corrupt:.2f}%, Robust {acc_robust:.2f}'
     print(result)
 
     results.append(result)
