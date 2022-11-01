@@ -3,6 +3,7 @@ import random
 import pytorchfi
 from pytorchfi.core import FaultInjection
 from bitstring import BitArray
+from collections import deque
 
 class add_input_layer(torch.nn.Module):
     '''
@@ -20,7 +21,7 @@ class add_input_layer(torch.nn.Module):
 
 
 class single_bit_flip_model(FaultInjection):
-    def __init__(self, model, batch_size, flip_bit_pos=None, save_log_list=False, **kwargs):
+    def __init__(self, model, batch_size, flip_bit_pos=None, save_log_list=False, flip_bit_pos_list=[], **kwargs):
         super().__init__(model, batch_size, **kwargs)
         self.flip_bit_pos = flip_bit_pos
         self.save_log_list = save_log_list
@@ -31,6 +32,8 @@ class single_bit_flip_model(FaultInjection):
         self.log_error_value_bin = []
         self.log_bit_pos = []
 
+        self.flip_bit_pos_deque = deque(flip_bit_pos_list)
+
     def reset_log(self):
         '''
         You MUST call this function after single inference if save_log_list=True
@@ -40,6 +43,7 @@ class single_bit_flip_model(FaultInjection):
         self.log_error_value = []
         self.log_error_value_bin = []
         self.log_bit_pos = []
+        self.flip_bit_pos_deque = deque([])
 
     def _single_bit_flip(self, orig_value, bit_pos):
         # set data type
@@ -109,7 +113,15 @@ class single_bit_flip_model(FaultInjection):
                     self.corrupt_dim[1][i]
                 ][self.corrupt_dim[2][i]]
 
-                rand_bit = random.randint(0, bits - 1) if self.flip_bit_pos is None else self.flip_bit_pos
+                rand_bit = None
+                if self.flip_bit_pos is None and not self.flip_bit_pos_deque:
+                    rand_bit = random.randint(0, bits - 1)
+                elif self.flip_bit_pos is not None:
+                    rand_bit = self.flip_bit_pos
+                elif self.flip_bit_pos_deque:
+                    rand_bit = self.flip_bit_pos_deque.popleft()
+                else:
+                    raise AssertionError(f'Bit flip position error:\nflip_bit_pos={self.flip_bit_pos}\nflip_bit_pos_deque={self.flip_bit_pos_deque}')
 
                 new_value = self._single_bit_flip(prev_value, rand_bit)
 
@@ -123,7 +135,15 @@ class single_bit_flip_model(FaultInjection):
                     self.corrupt_dim[1]
                 ][self.corrupt_dim[2]]
 
-                rand_bit = random.randint(0, bits - 1)
+                rand_bit = None
+                if self.flip_bit_pos is None and not self.flip_bit_pos_deque:
+                    rand_bit = random.randint(0, bits - 1)
+                elif self.flip_bit_pos is not None:
+                    rand_bit = self.flip_bit_pos
+                elif self.flip_bit_pos_deque:
+                    rand_bit = self.flip_bit_pos_deque.popleft()
+                else:
+                    raise AssertionError(f'Bit flip position error:\nflip_bit_pos={self.flip_bit_pos}\nflip_bit_pos_deque={self.flip_bit_pos_deque}')
 
                 new_value = self._single_bit_flip(prev_value, rand_bit)
 
