@@ -255,10 +255,10 @@ for layer_num in layer_nums:
         # calc result
         for i in range(batch_size):
 
-            if original_output[i] == corrupted_output[i]:
+            if labels[i] == corrupted_output[i]:
                 corrupt_correct_cnt += 1
 
-            if original_output[i] == robust_output[i]:
+            if labels[i] == robust_output[i]:
                 robust_correct_cnt += 1
 
             if labels[i] == original_output[i]:
@@ -303,7 +303,7 @@ for layer_num in layer_nums:
     result = f'Layer #{layer_num}:'
     result += f'\n    {orig_corrupt_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
     result += f'\n    {orig_robust_diff_cnt} / {orig_correct_cnt} = {rate2:.4f}%, ' + str(base_fi_robust_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
-    result += f'\n    Accuracy: Original {acc_orig:.2f}%, Corrupt {acc_corrupt:.2f}%, Robust {acc_robust:.2f}'
+    result += f'\n    Accuracy: Original {acc_orig:.2f}%, Corrupt {acc_corrupt:.2f}%, Robust {acc_robust:.2f}%'
     print(result)
 
     results.append(result)
@@ -312,6 +312,7 @@ for layer_num in layer_nums:
     vessl.log(step=layer_num, payload={'Misclassification_rate_corrupted_model': rate})
     vessl.log(step=layer_num, payload={'Misclassification_rate_robust_model': rate2})
     vessl.log(step=layer_num, payload={'test': [rate, rate2]})
+    vessl.log(step=layer_num, payload={'diff': rate2 - rate})
 
 # save log file
 # save overall log
