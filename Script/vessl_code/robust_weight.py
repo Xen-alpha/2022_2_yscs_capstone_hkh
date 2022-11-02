@@ -222,7 +222,7 @@ for layer_num in layer_nums:
         base_fi_robust_model.reset_log()
         base_fi_robust_model.flip_bit_pos_deque = deque(base_fi_model.log_bit_pos)
         robust_model = base_fi_robust_model.declare_weight_fault_injection(
-            function = base_fi_model.weight_single_bit_flip_function,
+            function = base_fi_robust_model.weight_single_bit_flip_function,
             layer_num = layer,
             k = k,
             dim1 = C,
