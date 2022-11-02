@@ -311,8 +311,6 @@ for layer_num in layer_nums:
     layer_name.append(str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0])
     vessl.log(step=layer_num, payload={'Misclassification_rate_corrupted_model': rate})
     vessl.log(step=layer_num, payload={'Misclassification_rate_robust_model': rate2})
-    vessl.log(step=layer_num, payload={'test': rate})
-    vessl.log(step=layer_num, payload={'test': rate2})
     vessl.log(step=layer_num, payload={'diff': rate2 - rate})
 
 # save log file
