@@ -311,7 +311,8 @@ for layer_num in layer_nums:
     layer_name.append(str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0])
     vessl.log(step=layer_num, payload={'Misclassification_rate_corrupted_model': rate})
     vessl.log(step=layer_num, payload={'Misclassification_rate_robust_model': rate2})
-    vessl.log(step=layer_num, payload={'test': [rate, rate2]})
+    vessl.log(step=layer_num, payload={'test': rate})
+    vessl.log(step=layer_num, payload={'test': rate2})
     vessl.log(step=layer_num, payload={'diff': rate2 - rate})
 
 # save log file
@@ -322,6 +323,7 @@ vessl.log({'seed': seed})
 f = open(save_path + '.txt', 'w')
 
 f.write(base_fi_model.print_pytorchfi_layer_summary())
+f.write(base_fi_robust_model.print_pytorchfi_layer_summary())
 f.write(f'\n\n===== Result =====\nSeed: {seed}\nSpecific bit flip position: {bit_flip_pos}\n')
 for result in results:
     f.write(result + '\n')
@@ -342,6 +344,8 @@ data = pd.DataFrame({'name': layer_name, f'seed_{seed}': misclassification_rate}
 data.to_csv(save_path + '.csv')
 
 # save avg value
+'''
 for name in set(layer_name):
     avg_val = data[data['name'] == name][f'seed_{seed}'].mean()
     vessl.log({name: avg_val})
+'''
