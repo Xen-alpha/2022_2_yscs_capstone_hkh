@@ -1,5 +1,5 @@
 '''
-vgg16의 relu를 relu6로 교체
+vgg19의 relu를 relu6로 교체
 '''
 
 import torch
