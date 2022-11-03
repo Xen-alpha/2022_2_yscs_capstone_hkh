@@ -84,7 +84,15 @@ class single_bit_flip_model(FaultInjection):
         else:
             raise AssertionError(f'Unsupported data type {bits}')
 
-        rand_bit = random.randint(0, bits - 1) if self.flip_bit_pos is None else self.flip_bit_pos
+        rand_bit = None
+        if self.flip_bit_pos is None and not self.flip_bit_pos_deque:
+            rand_bit = random.randint(0, bits - 1)
+        elif self.flip_bit_pos is not None:
+            rand_bit = self.flip_bit_pos
+        elif self.flip_bit_pos_deque:
+            rand_bit = self.flip_bit_pos_deque.popleft()
+        else:
+            raise AssertionError(f'Bit flip position error:\nflip_bit_pos={self.flip_bit_pos}\nflip_bit_pos_deque={self.flip_bit_pos_deque}')
 
         return self._single_bit_flip(weight[position], rand_bit)
 
