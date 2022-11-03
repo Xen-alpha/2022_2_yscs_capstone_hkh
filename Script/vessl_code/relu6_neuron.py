@@ -231,6 +231,7 @@ for layer_num in layer_nums:
             corrupted_output = corrupted_model(images)
 
         # robust model inference
+        robust_model.eval()
         with torch.no_grad():
             robust_output = robust_model(images)
 
