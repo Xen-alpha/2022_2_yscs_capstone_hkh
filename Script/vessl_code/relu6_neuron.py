@@ -182,8 +182,9 @@ error_logs = []
 for layer_num in layer_nums:
     
     orig_correct_cnt = 0
-    corrupt_correct_cnt = 0
     robust_correct_cnt = 0
+    corrupt_correct_cnt = 0
+    corruped_robust_correct_cnt = 0
     orig_corrupt_diff_cnt = 0
     orig_robust_diff_cnt = 0
     batch_idx = -1
@@ -229,10 +230,14 @@ for layer_num in layer_nums:
         with torch.no_grad():
             corrupted_output = corrupted_model(images)
 
-        # make robust model
+        # robust model inference
+        with torch.no_grad():
+            robust_output = robust_model(images)
+
+        # make corrupted robust model
         base_fi_robust_model.reset_log()
         base_fi_robust_model.flip_bit_pos_deque = deque(base_fi_model.log_bit_pos)
-        robust_model = base_fi_robust_model.declare_neuron_fault_injection(
+        corrupted_robust_model = base_fi_robust_model.declare_neuron_fault_injection(
             batch = [i for i in range(batch_size)],
             layer_num = layer_num_list,
             dim1 = dim1,
@@ -241,15 +246,16 @@ for layer_num in layer_nums:
             function = base_fi_robust_model.neuron_single_bit_flip_function
         )
 
-        # robust model inference
-        robust_model.eval()
+        # corrupted robust model inference
+        corrupted_robust_model.eval()
         with torch.no_grad():
-            robust_output = robust_model(images)
+            corrupted_robust_output = corrupted_robust_model(images)
 
         # get label
         original_output = torch.argmax(orig_output, dim=1).cpu().numpy()
         corrupted_output = torch.argmax(corrupted_output, dim=1).cpu().numpy()
         robust_output = torch.argmax(robust_output, dim=1).cpu().numpy()
+        corrupted_robust_output = torch.argmax(corrupted_robust_output, dim=1).cpu().numpy()
         labels = labels.numpy()
 
         # calc result
@@ -257,6 +263,9 @@ for layer_num in layer_nums:
 
             if labels[i] == corrupted_output[i]:
                 corrupt_correct_cnt += 1
+
+            if labels[i] == corrupted_robust_output[i]:
+                corruped_robust_correct_cnt += 1
 
             if labels[i] == robust_output[i]:
                 robust_correct_cnt += 1
@@ -267,10 +276,10 @@ for layer_num in layer_nums:
                 if original_output[i] != corrupted_output[i]:
                     orig_corrupt_diff_cnt += 1
 
-                if original_output[i] != robust_output[i]:
+                if original_output[i] != corrupted_robust_output[i]:
                     orig_robust_diff_cnt += 1
 
-                if args.detailed_log and robust_output[i] != corrupted_output[i]:
+                if args.detailed_log and corrupted_robust_output[i] != corrupted_output[i]:
                         log = [
                             f'Layer: {layer_num}',
                             f'Batch: {batch_idx}',
@@ -286,7 +295,7 @@ for layer_num in layer_nums:
                             f'Error binary(robust model):    {base_fi_robust_model.log_error_value_bin[i]}',
                             f'Label:        {labels[i]}',
                             f'Corrupted model output: {corrupted_output[i]}',
-                            f'Robust model output: {robust_output[i]}'
+                            f'Robust model output: {corrupted_robust_output[i]}'
                             '\n'
                         ]
 
@@ -297,21 +306,25 @@ for layer_num in layer_nums:
     acc_orig = orig_correct_cnt / total_imgs * 100
     acc_corrupt = corrupt_correct_cnt / total_imgs * 100
     acc_robust = robust_correct_cnt / total_imgs * 100
+    acc_corrupted_robust = corruped_robust_correct_cnt / total_imgs * 100
     rate = orig_corrupt_diff_cnt / orig_correct_cnt * 100
     rate2 = orig_robust_diff_cnt / orig_correct_cnt * 100
 
     result = f'Layer #{layer_num}:'
     result += f'\n    {orig_corrupt_diff_cnt} / {orig_correct_cnt} = {rate:.4f}%, ' + str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
     result += f'\n    {orig_robust_diff_cnt} / {orig_correct_cnt} = {rate2:.4f}%, ' + str(base_fi_robust_model.layers_type[layer_num]).split(".")[-1].split("'")[0]
-    result += f'\n    Accuracy: Original {acc_orig:.2f}%, Corrupt {acc_corrupt:.2f}%, Robust {acc_robust:.2f}%'
+    result += f'\n    Accuracy: Original {acc_orig:.2f}%, Corrupt {acc_corrupt:.2f}%, Robust {acc_robust:.2f}%, Corrupted-robust {acc_corrupted_robust:.2f}%'
     print(result)
 
     results.append(result)
     misclassification_rate.append(rate)
     layer_name.append(str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0])
-    vessl.log(step=layer_num, payload={'Misclassification_rate_corrupted_model': rate})
+    vessl.log(step=layer_num, payload={'Misclassification_rate_original_model': rate})
     vessl.log(step=layer_num, payload={'Misclassification_rate_robust_model': rate2})
     vessl.log(step=layer_num, payload={'diff': rate2 - rate})
+    vessl.log(step=layer_num, payload={'acc_corrupted': acc_corrupt})
+    vessl.log(step=layer_num, payload={'acc_robust': acc_robust})
+    vessl.log(step=layer_num, payload={'acc_corrupted_robust': acc_corrupted_robust})
 
 # save log file
 # save overall log
