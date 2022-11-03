@@ -201,6 +201,7 @@ for layer_num in layer_nums:
 
         if args.detailed_log:
             log = [
+                f'Model',
                 f'Layer: {layer_num}',
                 f'''Layer type: {str(base_fi_model.layers_type[layer_num]).split(".")[-1].split("'")[0]}''',
                 f'Position: ({k[0]}, {C[0]}, {H[0]}, {W[0]})',
@@ -229,6 +230,21 @@ for layer_num in layer_nums:
             dim2 = H,
             dim3 = W
         )
+
+        if args.detailed_log:
+            log = [
+                f'Robust model',
+                f'Layer: {layer_num}',
+                f'''Layer type: {str(base_fi_robust_model.layers_type[layer_num]).split(".")[-1].split("'")[0]}''',
+                f'Position: ({k[0]}, {C[0]}, {H[0]}, {W[0]})',
+                f'Original value:  {base_fi_robust_model.log_original_value[0]}',
+                f'Original binary: {base_fi_robust_model.log_original_value_bin[0]}',
+                f'Flip bit: {base_fi_robust_model.log_bit_pos[0]}',
+                f'Error value:     {base_fi_robust_model.log_error_value[0]}',
+                f'Error binary:    {base_fi_robust_model.log_error_value_bin[0]}',
+            ]
+
+            detailed_log.append('\n'.join(log))
 
         # robust model inference
         robust_model.eval()
