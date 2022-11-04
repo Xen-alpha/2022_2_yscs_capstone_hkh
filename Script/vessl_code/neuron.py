@@ -11,7 +11,8 @@ import vessl
 
 from torchvision import transforms
 
-from base_fault_injection import add_input_layer, single_bit_flip_model
+from base_fault_injection import single_bit_flip_model
+from utils import add_input_layer
 
 import pytorchfi # git clone https://github.com/WaiNaat/pytorchfi.git
 from pytorchfi.core import FaultInjection
