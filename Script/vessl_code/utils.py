@@ -32,6 +32,7 @@ class module_restriction:
         return fhooks
 
     def _restriction_hook(self, module, input, output):
+        print(f'BEFORE:: max:{torch.max(output)} min:{torch.min(output)}')
         torch.minimum(output, self.restriction_max_value, out=output)
         torch.maximum(output, self.restriction_min_value, out=output)
-        print(f'max:{torch.max(output)} min:{torch.min(output)}')
+        print(f'AFTER::  max:{torch.max(output)} min:{torch.min(output)}')
