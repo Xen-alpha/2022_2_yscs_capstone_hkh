@@ -171,9 +171,6 @@ for layer_num in layer_nums:
     for images, labels in dataloader:
 
         batch_idx += 1
-        if batch_idx > 3:
-            exit()
-
         images = images.to(device)
 
         # original model inference
