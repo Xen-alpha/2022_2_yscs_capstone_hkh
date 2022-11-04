@@ -24,12 +24,11 @@ class module_restriction:
 
     def restrict_relu(self, model):
         fhooks = []
-        for name, module in model.named_children():
+        for name, module in model.named_modules():
             if type(module) == torch.nn.ReLU or type(module) == torch.nn.ReLU6:
                 fhooks.append(
                     module.register_forward_hook(self._restriction_hook)
                 )
-                print(f'register forward hook to {type(module)}')
         return fhooks
 
     def _restriction_hook(self, module, input, output):
