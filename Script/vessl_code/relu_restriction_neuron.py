@@ -136,7 +136,7 @@ base_fi_robust_model = single_bit_flip_model(
     save_log_list = args.detailed_log
 )
 
-print(base_fi_robust_model.print_pytorchfi_layer_summary(), end='\n\n')
+#print(base_fi_robust_model.print_pytorchfi_layer_summary(), end='\n\n')
 
 # fault injection layer range setting
 if layer_nums != 'all':
