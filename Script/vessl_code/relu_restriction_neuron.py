@@ -217,7 +217,7 @@ for layer_num in layer_nums:
         robust_model.eval()
         with torch.no_grad():
             robust_output = robust_model(images)
-
+        print(robust_output)
         # make corrupted robust model
         base_fi_robust_model.reset_log()
         base_fi_robust_model.flip_bit_pos_deque = deque(base_fi_model.log_bit_pos)
@@ -237,7 +237,7 @@ for layer_num in layer_nums:
         corrupted_robust_model.eval()
         with torch.no_grad():
             corrupted_robust_output = corrupted_robust_model(images)
-
+        print(corrupted_robust_output)
         # get label
         original_output = torch.argmax(orig_output, dim=1).cpu().numpy()
         corrupted_output = torch.argmax(corrupted_output, dim=1).cpu().numpy()

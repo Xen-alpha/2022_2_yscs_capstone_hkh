@@ -29,6 +29,7 @@ class module_restriction:
                 fhooks.append(
                     module.register_forward_hook(self._restriction_hook)
                 )
+                print('registered forward hook to relu')
         return fhooks
 
     def _restriction_hook(self, module, input, output):
