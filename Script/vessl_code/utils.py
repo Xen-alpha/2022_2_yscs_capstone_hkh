@@ -34,6 +34,6 @@ class module_restriction:
 
     def _restriction_hook(self, module, input, output):
         print(f'BEFORE:: max:{torch.max(output)} min:{torch.min(output)}')
-        torch.minimum(output, self.restriction_max_value, out=output)
-        torch.maximum(output, self.restriction_min_value, out=output)
+        torch.fmin(output, self.restriction_max_value, out=output)
+        torch.fmax(output, self.restriction_min_value, out=output)
         print(f'AFTER::  max:{torch.max(output)} min:{torch.min(output)}')
