@@ -168,7 +168,6 @@ for layer_num in layer_nums:
 
         batch_idx += 1
         if batch_idx > 3:
-            print('\n'.join(error_logs))
             exit()
 
         images = images.to(device)

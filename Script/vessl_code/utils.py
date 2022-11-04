@@ -20,6 +20,7 @@ class module_restriction:
             raise ValueError('restriction_max_value must be greater than or equal to restriction_min_value.')
         self.restriction_max_value = torch.Tensor([restriction_max_value])
         self.restriction_min_value = torch.Tensor([restriction_min_value])
+        print(f'restriction info: max {restriction_max_value}, min {restriction_min_value}\n')
 
     def restrict_relu(self, model):
         fhooks = []
