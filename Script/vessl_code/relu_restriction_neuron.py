@@ -212,6 +212,8 @@ for layer_num in layer_nums:
             corrupted_output = corrupted_model(images)
 
         # robust model inference
+        print('=====')
+        print('robust model')
         robust_model.eval()
         with torch.no_grad():
             robust_output = robust_model(images)
@@ -231,6 +233,7 @@ for layer_num in layer_nums:
         restriction_tool.restrict_relu(corrupted_robust_model)
 
         # corrupted robust model inference
+        print('corrupted robust model')
         corrupted_robust_model.eval()
         with torch.no_grad():
             corrupted_robust_output = corrupted_robust_model(images)
