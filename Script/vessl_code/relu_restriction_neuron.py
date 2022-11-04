@@ -18,7 +18,8 @@ import vessl
 from torchvision import transforms
 from collections import deque
 
-from base_fault_injection import add_input_layer, single_bit_flip_model
+from base_fault_injection import single_bit_flip_model
+from utils import add_input_layer, activation_restriction_model
 
 import pytorchfi # git clone https://github.com/WaiNaat/pytorchfi.git
 from pytorchfi.core import FaultInjection
@@ -43,6 +44,8 @@ channels = int(os.environ.get('channels', 3))
 bit_flip_pos = int(os.environ.get('bit_flip_pos', -1))
 layer_type = str(os.environ.get('layer_type', 'all'))
 layer_nums = str(os.environ.get('layer_nums', 'all'))
+relu_restriction_max_value = int(os.environ.get('relu_restriction_max_value', 2147483647))
+relu_restriction_min_value = int(os.environ.get('relu_restriction_min_value', -2147483647))
 
 if seed < 0:
     seed = int(datetime.datetime.now().timestamp())
@@ -115,21 +118,18 @@ base_fi_model = single_bit_flip_model(
 print(base_fi_model.print_pytorchfi_layer_summary(), end='\n\n')
 
 # make robust model
-# change relu to relu6
-def replace_layers(model, old, new):
-    for n, module in model.named_children():
-        if len(list(module.children())) > 0:
-            replace_layers(module, old, new)
-            
-        if isinstance(module, old):
-            setattr(model, n, new(inplace=module.inplace)) # inplace때문에 relu대상만 가능?
+robust_model_base = copy.deepcopy(model)
 
-robust_model = copy.deepcopy(model)
-replace_layers(robust_model, torch.nn.ReLU, torch.nn.ReLU6)
+robust_model = activation_restriction_model(
+    model = robust_model_base,
+    restriction_max_value = relu_restriction_max_value,
+    restriction_min_value = relu_restriction_min_value
+)
+robust_model.restrict_relu()
 
 # make fault injection base for robust model
 base_fi_robust_model = single_bit_flip_model(
-    model = copy.deepcopy(robust_model),
+    model = copy.deepcopy(robust_model_base),
     batch_size = batch_size, 
     input_shape = [channels, img_size, img_size],
     layer_types = layer_type,
@@ -168,6 +168,7 @@ for layer_num in layer_nums:
     for images, labels in dataloader:
 
         batch_idx += 1
+        if batch_idx > 3: exit()
 
         images = images.to(device)
 
@@ -222,6 +223,14 @@ for layer_num in layer_nums:
             dim3 = dim3,
             function = base_fi_robust_model.neuron_single_bit_flip_function
         )
+
+        corrupted_robust_model = activation_restriction_model(
+            model = corrupted_robust_model,
+            restriction_max_value = relu_restriction_max_value,
+            restriction_min_value = relu_restriction_min_value
+        )
+        corrupted_robust_model.restrict_relu()
+        base_fi_robust_model.corrupted_model = corrupted_robust_model
 
         # corrupted robust model inference
         corrupted_robust_model.eval()
