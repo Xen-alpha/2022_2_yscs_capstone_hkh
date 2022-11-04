@@ -105,9 +105,6 @@ elif dataset == 'cifar100':
 else:
     raise AssertionError(f'Invalid dataset name {dataset}')
 
-# make tool for activation restriction
-restriction_tool = module_restriction(restriction_max_value=relu_restriction_max_value, restriction_min_value=relu_restriction_min_value)
-
 # make fault injection base model
 base_fi_model = single_bit_flip_model(
     model = copy.deepcopy(model),
@@ -119,6 +116,13 @@ base_fi_model = single_bit_flip_model(
 )
 
 print(base_fi_model.print_pytorchfi_layer_summary(), end='\n\n')
+
+# make tool for activation restriction
+restriction_tool = module_restriction(
+    restriction_max_value = relu_restriction_max_value, 
+    restriction_min_value = relu_restriction_min_value,
+    device = device
+)
 
 # make robust model
 robust_model_base = copy.deepcopy(model)
