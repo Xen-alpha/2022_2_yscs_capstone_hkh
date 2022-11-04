@@ -19,7 +19,7 @@ from torchvision import transforms
 from collections import deque
 
 from base_fault_injection import single_bit_flip_model
-from utils import add_input_layer, activation_restriction_model
+from utils import add_input_layer, module_restriction
 
 import pytorchfi # git clone https://github.com/WaiNaat/pytorchfi.git
 from pytorchfi.core import FaultInjection
@@ -105,6 +105,9 @@ elif dataset == 'cifar100':
 else:
     raise AssertionError(f'Invalid dataset name {dataset}')
 
+# make tool for activation restriction
+restriction_tool = module_restriction(restriction_max_value=relu_restriction_max_value, restriction_min_value=relu_restriction_min_value)
+
 # make fault injection base model
 base_fi_model = single_bit_flip_model(
     model = copy.deepcopy(model),
@@ -120,12 +123,8 @@ print(base_fi_model.print_pytorchfi_layer_summary(), end='\n\n')
 # make robust model
 robust_model_base = copy.deepcopy(model)
 
-robust_model = activation_restriction_model(
-    model = robust_model_base,
-    restriction_max_value = relu_restriction_max_value,
-    restriction_min_value = relu_restriction_min_value
-)
-robust_model.restrict_relu()
+robust_model = copy.deepcopy(model)
+restriction_tool.restrict_relu(robust_model)
 
 # make fault injection base for robust model
 base_fi_robust_model = single_bit_flip_model(
@@ -224,13 +223,7 @@ for layer_num in layer_nums:
             function = base_fi_robust_model.neuron_single_bit_flip_function
         )
 
-        corrupted_robust_model = activation_restriction_model(
-            model = corrupted_robust_model,
-            restriction_max_value = relu_restriction_max_value,
-            restriction_min_value = relu_restriction_min_value
-        )
-        corrupted_robust_model.restrict_relu()
-        base_fi_robust_model.corrupted_model = corrupted_robust_model
+        restriction_tool.restrict_relu(corrupted_robust_model)
 
         # corrupted robust model inference
         corrupted_robust_model.eval()
