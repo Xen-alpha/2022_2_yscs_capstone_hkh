@@ -44,8 +44,8 @@ channels = int(os.environ.get('channels', 3))
 bit_flip_pos = int(os.environ.get('bit_flip_pos', -1))
 layer_type = str(os.environ.get('layer_type', 'all'))
 layer_nums = str(os.environ.get('layer_nums', 'all'))
-relu_restriction_max_value = float(os.environ.get('relu_restriction_max_value', float('inf')))
-relu_restriction_min_value = float(os.environ.get('relu_restriction_min_value', -float('inf')))
+relu_restriction_max_value = float(os.environ.get('restriction_max_value', float('inf')))
+relu_restriction_min_value = float(os.environ.get('restriction_min_value', -float('inf')))
 
 if 'mobilenet' not in 'model_name':
     raise ValueError("model name should contain 'mobilenet'")
