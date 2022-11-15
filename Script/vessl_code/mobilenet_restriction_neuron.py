@@ -47,7 +47,7 @@ layer_nums = str(os.environ.get('layer_nums', 'all'))
 relu_restriction_max_value = float(os.environ.get('restriction_max_value', float('inf')))
 relu_restriction_min_value = float(os.environ.get('restriction_min_value', -float('inf')))
 
-if 'mobilenet' not in 'model_name':
+if 'mobilenet' not in model_name:
     raise ValueError("model name should contain 'mobilenet'")
 
 if seed < 0:
