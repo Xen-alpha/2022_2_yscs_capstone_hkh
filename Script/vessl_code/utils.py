@@ -31,6 +31,17 @@ class module_restriction:
                 )
         return fhooks
 
+    def restrict_InvertedResidual(self, model):
+        fhooks = []
+        for name, module in model.named_modules():
+            if type(module).__name__ == 'InvertedResidual':
+                fhooks.append(
+                    module.register_forward_hook(self._restriction_hook)
+                )
+
     def _restriction_hook(self, module, input, output):
         torch.fmin(output, self.restriction_max_value, out=output)
         torch.fmax(output, self.restriction_min_value, out=output)
+
+    def _test_hook(self, module, input, output):
+        print(f'max:{torch.max(output)} min:{torch.min(output)}')
