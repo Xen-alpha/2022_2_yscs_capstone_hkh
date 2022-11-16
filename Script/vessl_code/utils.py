@@ -51,8 +51,9 @@ class module_restriction:
             if bn_cnt == 3:
                 bn_cnt = 0
                 fhooks.append(
-                    module.register_forward_hook(self._restrict_second_largest_hook)
+                    module.register_forward_hook(self._restriction_hook)
                 )
+        return fhooks
 
     def _restriction_hook(self, module, input, output):
         torch.fmin(output, self.restriction_max_value, out=output)
