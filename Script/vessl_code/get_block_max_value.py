@@ -59,6 +59,6 @@ if __name__ == '__main__':
       result = model(images)
 
     for i, value in enumerate(tool.result):
-      vessl.log(step=batch_idx, payload={f'block {i}': value.item()})
+      vessl.log(step=batch_idx, payload={f'block_{i}': value.item()})
 
   print(tool.result)
