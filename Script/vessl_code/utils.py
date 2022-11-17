@@ -80,3 +80,26 @@ class module_restriction:
 
     def _test_hook(self, module, input, output):
         print(f'max:{torch.max(output)} min:{torch.min(output)}')
+
+class inverted_residual_block_max_restriction():
+    def __init__(self, max_list, device='cuda'):
+        self.module_restriction_list = []
+        for value in max_list:
+            self.module_restriction_list.append(
+                module_restriction(restriction_max_value=value, device=device)
+            )
+
+    def restrict(self, model):
+        idx = 0
+        fhooks = []
+
+        for name, module in model.named_modules():
+            if type(module).__name__ == 'InvertedResidual':
+                fhooks.append(
+                    module.register_forward_hook(
+                        self.module_restriction_list[idx]._restriction_hook
+                    )
+                )
+                idx += 1
+
+        return fhooks
