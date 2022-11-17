@@ -35,6 +35,7 @@ if __name__ == '__main__':
   batch_size = 256
 
   model = torch.hub.load("chenyaofo/pytorch-cifar-models", dataset + '_' + model_name, pretrained=True)
+  model.to('cuda')
 
   transform = transforms.Compose(
     [
