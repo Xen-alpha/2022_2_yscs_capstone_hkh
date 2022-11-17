@@ -129,6 +129,7 @@ robust_model_base = copy.deepcopy(model)
 
 robust_model = copy.deepcopy(model)
 restriction_tool.restrict_relu(robust_model)
+restriction_tool.restrict_maxpool(robust_model)
 
 # make fault injection base for robust model
 base_fi_robust_model = single_bit_flip_model(
@@ -226,6 +227,7 @@ for layer_num in layer_nums:
         )
 
         restriction_tool.restrict_relu(corrupted_robust_model)
+        restriction_tool.restrict_maxpool(corrupted_robust_model)
 
         # corrupted robust model inference
         corrupted_robust_model.eval()

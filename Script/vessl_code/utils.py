@@ -31,6 +31,15 @@ class module_restriction:
                 )
         return fhooks
 
+    def restrict_maxpool(self, model):
+        fhooks = []
+        for name, module in model.named_modules():
+            if type(module) == torch.nn.MaxPool2d:
+                fhooks.append(
+                    module.register_forward_hook(self._restriction_hook)
+                )
+        return fhooks
+
     def restrict_InvertedResidual(self, model):
         fhooks = []
         for name, module in model.named_modules():
