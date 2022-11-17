@@ -127,7 +127,25 @@ restriction_tool = module_restriction(
     device = device
 )
 
-max_list = [] # you have to hard-code this list
+max_list = [
+    3.056069612503052,
+    3.851067304611206,
+    3.838979005813598,
+    2.6741721630096436,
+    2.7943365573883057,
+    3.3533458709716797,
+    2.5827152729034424,
+    2.52925968170166,
+    2.577448606491089,
+    2.601331949234009,
+    2.788374662399292,
+    3.1826024055480957,
+    3.337470769882202,
+    2.298085927963257,
+    2.5277740955352783,
+    3.0595788955688477,
+    1.64428973197937,
+] # you have to hard-code this list
 block_restriction_tool = inverted_residual_block_max_restriction(
     max_list = max_list,
     device = device
